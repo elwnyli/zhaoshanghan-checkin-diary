@@ -119,7 +119,7 @@ function render() {
             aria-pressed="${checked}"
             aria-label="${dateLabel} ${period.label}${action}"
             title="${dateLabel} ${period.label}${action}"
-          ><span class="check-mark" aria-hidden="true">✓</span></button>
+          ><span class="check-mark" aria-hidden="true"><span class="seal-surname">赵</span><span class="seal-caption">尚涵大王</span></span></button>
         </td>`;
     }).join("");
     return `<tr><th scope="row" class="row-label" style="--period-color: var(--${period.id === "morning" ? "sunrise" : period.id})" data-symbol="${period.symbol}">${period.label}</th>${cells}</tr>`;
