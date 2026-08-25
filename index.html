@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1e4ca1" />
+    <meta
+      name="description"
+      content="赵尚涵大王的每周上下班打卡日记。轻点方格，即可完成早上、中午、下午、晚上的打卡。"
+    />
+    <title>赵尚涵大王的打卡日记</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="diary" aria-labelledby="page-title">
+        <header class="diary-header">
+          <div class="title-copy">
+            <p class="eyebrow"><span aria-hidden="true">✦</span> WEEKLY ATTENDANCE</p>
+            <h1 id="page-title">赵尚涵大王的<br /><em>打卡日记</em></h1>
+            <p class="instruction">轻点方格，盖下一枚到岗印</p>
+          </div>
+
+          <div class="royal-seal" aria-hidden="true">
+            <span>赵</span>
+            <small>尚涵大王</small>
+          </div>
+        </header>
+
+        <section class="week-toolbar" aria-label="周次控制">
+          <button class="week-button icon-button" id="previous-week" type="button" aria-label="查看上一周">
+            <span aria-hidden="true">←</span>
+          </button>
+          <button class="week-button week-label" id="current-week" type="button" aria-label="回到本周">
+            <span id="week-range">本周</span>
+            <small>点这里回到本周</small>
+          </button>
+          <button class="week-button icon-button" id="next-week" type="button" aria-label="查看下一周">
+            <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
+        <section class="board" aria-label="本周打卡表">
+          <div class="board-summary">
+            <div>
+              <p class="section-kicker">本周上岗簿</p>
+              <p class="summary-text"><strong id="completed-count">0</strong><span> / 28 枚印章</span></p>
+            </div>
+            <div class="progress-wrap" aria-label="本周打卡进度">
+              <div class="progress-track"><span id="progress-bar"></span></div>
+              <span id="progress-text">0%</span>
+            </div>
+          </div>
+
+          <div class="table-scroll">
+            <table class="checkin-table">
+              <caption class="sr-only">星期一到星期日，早上、中午、下午、晚上打卡表</caption>
+              <thead id="week-head"></thead>
+              <tbody id="checkin-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <footer class="diary-footer">
+          <p><span class="tap-dot" aria-hidden="true"></span> 已自动保存在这台设备；再点一次即可撤销。</p>
+          <button id="clear-week" type="button">清空这一周</button>
+        </footer>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

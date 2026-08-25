@@ -1,0 +1,739 @@
+:root {
+  --paper: #f7fbff;
+  --paper-deep: #e9f4ff;
+  --ink: #10213f;
+  --muted: #60708e;
+  --line: #b5d1ee;
+  --line-strong: #6ea5e5;
+  --royal-blue: #1e4ca1;
+  --blue-bright: #4685e7;
+  --sky: #d9ecff;
+  --sunrise: #f6bd58;
+  --noon: #f18a5a;
+  --afternoon: #44b8a3;
+  --evening: #7865c5;
+  --seal: #e85d54;
+  --shadow: 0 22px 60px rgba(30, 76, 161, 0.19);
+  color: var(--ink);
+  background: #dfeeff;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #dfeeff;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 5% 6%, rgba(255, 255, 255, 0.92) 0 4px, transparent 4.5px) 0 0 / 34px 34px,
+    linear-gradient(135deg, #d9ebff 0%, #ecf6ff 48%, #dceeff 100%);
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 3px solid #ffcf5d;
+  outline-offset: 3px;
+}
+
+.page-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.diary {
+  width: min(920px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(54, 118, 197, 0.26);
+  border-radius: 28px;
+  background: rgba(247, 251, 255, 0.9);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+}
+
+.diary-header {
+  position: relative;
+  display: flex;
+  min-height: 210px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  overflow: hidden;
+  padding: clamp(28px, 5.2vw, 52px) clamp(24px, 6vw, 60px);
+  color: #fff;
+  background:
+    linear-gradient(105deg, rgba(15, 52, 116, 0.96) 0%, rgba(28, 80, 171, 0.96) 57%, rgba(56, 125, 220, 0.9) 100%),
+    var(--royal-blue);
+}
+
+.diary-header::before,
+.diary-header::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+
+.diary-header::before {
+  right: -34px;
+  bottom: -92px;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(255, 255, 255, 0.06), 0 0 0 57px rgba(255, 255, 255, 0.05);
+}
+
+.diary-header::after {
+  top: 22px;
+  right: 182px;
+  width: 94px;
+  height: 94px;
+  border: 1px solid rgba(255, 255, 255, 0.19);
+  transform: rotate(45deg);
+}
+
+.title-copy,
+.royal-seal {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.eyebrow {
+  color: #b6dcff;
+}
+
+.eyebrow span {
+  display: inline-block;
+  margin-right: 5px;
+  color: #ffcf64;
+}
+
+h1 {
+  margin: 9px 0 10px;
+  color: #fff;
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", "Songti SC", serif;
+  font-size: clamp(2.1rem, 6.1vw, 3.75rem);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: 0.055em;
+}
+
+h1 em {
+  display: inline-block;
+  margin-left: 0.24em;
+  color: #ffce65;
+  font-style: normal;
+}
+
+.instruction {
+  margin: 0;
+  color: #d9ecff;
+  font-size: clamp(0.83rem, 2vw, 0.98rem);
+  letter-spacing: 0.04em;
+}
+
+.royal-seal {
+  display: grid;
+  width: clamp(98px, 15vw, 132px);
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  align-content: center;
+  border: 3px solid rgba(255, 231, 190, 0.92);
+  border-radius: 50%;
+  color: #fff3d9;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 25, 83, 0.22);
+  transform: rotate(-8deg);
+}
+
+.royal-seal::before {
+  position: absolute;
+  inset: 7px;
+  border: 1px dashed rgba(255, 234, 196, 0.65);
+  border-radius: inherit;
+  content: "";
+}
+
+.royal-seal span {
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 0.85;
+}
+
+.royal-seal small {
+  margin-top: 8px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.week-toolbar {
+  display: grid;
+  grid-template-columns: 48px minmax(176px, 1fr) 48px;
+  align-items: stretch;
+  width: min(530px, calc(100% - 32px));
+  margin: -26px auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(64, 121, 194, 0.22);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 25px rgba(32, 76, 139, 0.15);
+}
+
+.week-button {
+  min-height: 54px;
+  border: 0;
+  color: var(--royal-blue);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.week-button:hover {
+  background: #e9f3ff;
+}
+
+.icon-button {
+  font-size: 1.22rem;
+  font-weight: 700;
+}
+
+.icon-button:active {
+  transform: scale(0.92);
+}
+
+.week-label {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1px;
+  border-right: 1px solid #d7e7f8;
+  border-left: 1px solid #d7e7f8;
+}
+
+.week-label span {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.week-label small {
+  color: #8292ad;
+  font-size: 0.64rem;
+}
+
+.board {
+  padding: clamp(28px, 5vw, 46px) clamp(15px, 4.5vw, 45px) 0;
+}
+
+.board-summary {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  margin-bottom: 17px;
+}
+
+.section-kicker {
+  color: #6383a7;
+}
+
+.summary-text {
+  margin: 4px 0 0;
+  color: #71829c;
+  font-size: 0.92rem;
+}
+
+.summary-text strong {
+  color: var(--royal-blue);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 1.48rem;
+  letter-spacing: -0.08em;
+}
+
+.progress-wrap {
+  display: flex;
+  min-width: min(38vw, 230px);
+  align-items: center;
+  gap: 10px;
+  color: #6d7e97;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.progress-track {
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #deebf8;
+}
+
+.progress-track span {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sunrise), var(--noon), var(--afternoon), var(--evening));
+  transition: width 360ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.table-scroll {
+  overflow-x: auto;
+  padding: 3px;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.checkin-table {
+  width: 100%;
+  min-width: 596px;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: separate;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.checkin-table th,
+.checkin-table td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.checkin-table tr > :last-child {
+  border-right: 0;
+}
+
+.checkin-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.corner-cell {
+  width: 84px;
+  color: #f6fbff;
+  background: #3579d4;
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.weekday {
+  height: 77px;
+  padding: 5px 2px;
+  color: #1f5399;
+  background: linear-gradient(180deg, #e5f2ff, #d4eaff);
+}
+
+.weekday.is-today {
+  color: #fff;
+  background: linear-gradient(165deg, #3e83e2, #2864bd);
+}
+
+.weekday-name,
+.weekday-date {
+  display: block;
+}
+
+.weekday-name {
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: 1.16rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.weekday-date {
+  margin-top: 7px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.row-label {
+  position: relative;
+  width: 84px;
+  padding: 0 8px;
+  color: #245aab;
+  background: #edf6ff;
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: 1.22rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.row-label::before {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--period-color);
+  content: attr(data-symbol);
+  font-family: Inter, ui-sans-serif, sans-serif;
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+.checkin-table td {
+  height: 89px;
+  padding: 0;
+  background: #fbfdff;
+}
+
+.checkin-cell {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 88px;
+  place-items: center;
+  overflow: hidden;
+  border: 0;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 180ms ease, transform 150ms ease;
+}
+
+.checkin-cell::before {
+  position: absolute;
+  inset: 13px;
+  border: 1px dashed rgba(99, 142, 194, 0.25);
+  border-radius: 14px;
+  content: "";
+  transition: border-color 180ms ease, transform 250ms ease, opacity 180ms ease;
+}
+
+.checkin-cell:hover::before {
+  border-color: var(--period-color);
+}
+
+.checkin-cell:active {
+  transform: scale(0.94);
+}
+
+.checkin-cell .check-mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+  transform: scale(0.4) rotate(-25deg);
+  transition: opacity 180ms ease, transform 300ms cubic-bezier(0.16, 1.3, 0.3, 1);
+}
+
+.checkin-cell.is-checked {
+  background: color-mix(in srgb, var(--period-color) 83%, #ffffff);
+}
+
+.checkin-cell.is-checked::before {
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  opacity: 0.87;
+  transform: rotate(-10deg) scale(0.84);
+}
+
+.checkin-cell.is-checked .check-mark {
+  opacity: 1;
+  transform: scale(1) rotate(-8deg);
+}
+
+.checkin-cell[data-period="morning"] {
+  --period-color: var(--sunrise);
+}
+
+.checkin-cell[data-period="noon"] {
+  --period-color: var(--noon);
+}
+
+.checkin-cell[data-period="afternoon"] {
+  --period-color: var(--afternoon);
+}
+
+.checkin-cell[data-period="evening"] {
+  --period-color: var(--evening);
+}
+
+.diary-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px clamp(15px, 4.5vw, 45px) clamp(20px, 4vw, 34px);
+  color: #6c7f9d;
+  font-size: 0.77rem;
+}
+
+.diary-footer p {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.tap-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sunrise), var(--evening));
+}
+
+#clear-week {
+  flex: 0 0 auto;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 1px solid #9fb6d0;
+  color: #6b7f9e;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.77rem;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+#clear-week:hover {
+  border-color: var(--seal);
+  color: var(--seal);
+}
+
+.toast {
+  position: fixed;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 10;
+  max-width: calc(100% - 32px);
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  opacity: 0;
+  color: #fff;
+  background: rgba(16, 33, 63, 0.88);
+  box-shadow: 0 10px 24px rgba(16, 33, 63, 0.18);
+  font-size: 0.83rem;
+  pointer-events: none;
+  transform: translate(-50%, 15px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 620px) {
+  .page-shell {
+    align-items: start;
+    padding: 12px;
+  }
+
+  .diary {
+    border-radius: 21px;
+  }
+
+  .diary-header {
+    min-height: 180px;
+    padding: 31px 25px 37px;
+  }
+
+  .royal-seal {
+    position: absolute;
+    top: 30px;
+    right: 21px;
+    width: 82px;
+  }
+
+  .royal-seal small {
+    font-size: 0.48rem;
+  }
+
+  .royal-seal span {
+    font-size: 2.35rem;
+  }
+
+  .board-summary {
+    align-items: flex-end;
+    gap: 16px;
+  }
+
+  .progress-wrap {
+    min-width: 102px;
+  }
+
+  .checkin-table {
+    min-width: 554px;
+  }
+
+  .corner-cell,
+  .row-label {
+    width: 72px;
+  }
+
+  .weekday {
+    height: 68px;
+  }
+
+  .weekday-name {
+    font-size: 1rem;
+  }
+
+  .checkin-table td,
+  .checkin-cell {
+    min-height: 76px;
+    height: 76px;
+  }
+
+  .checkin-cell::before {
+    inset: 10px;
+  }
+
+  .diary-footer {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 405px) {
+  .diary-header {
+    padding-left: 20px;
+  }
+
+  h1 {
+    font-size: 2.05rem;
+  }
+
+  .instruction {
+    max-width: 198px;
+  }
+
+  .board {
+    padding-right: 11px;
+    padding-left: 11px;
+  }
+
+  .board-summary {
+    display: block;
+  }
+
+  .progress-wrap {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .diary-footer {
+    display: block;
+  }
+
+  #clear-week {
+    margin-top: 14px;
+  }
+}
+
+/* 常见手机宽度下让一整周无需横向滑动；极窄屏幕则保留较大的可点按方格。 */
+@media (min-width: 356px) and (max-width: 620px) {
+  .table-scroll {
+    padding: 1px;
+  }
+
+  .checkin-table {
+    min-width: 100%;
+  }
+
+  .corner-cell,
+  .row-label {
+    width: 54px;
+  }
+
+  .corner-cell {
+    font-size: 1.04rem;
+  }
+
+  .row-label {
+    font-size: 1.04rem;
+  }
+
+  .weekday {
+    height: 64px;
+  }
+
+  .weekday-name {
+    font-size: 0.93rem;
+  }
+
+  .weekday-date {
+    margin-top: 5px;
+    font-size: 0.6rem;
+  }
+
+  .checkin-table td,
+  .checkin-cell {
+    min-height: 68px;
+    height: 68px;
+  }
+
+  .checkin-cell::before {
+    inset: 7px;
+    border-radius: 11px;
+  }
+
+  .checkin-cell .check-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
