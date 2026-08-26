@@ -146,13 +146,6 @@ h1 em {
   font-style: normal;
 }
 
-.instruction {
-  margin: 0;
-  color: #d9ecff;
-  font-size: clamp(0.83rem, 2vw, 0.98rem);
-  letter-spacing: 0.04em;
-}
-
 .royal-seal {
   display: grid;
   width: clamp(98px, 15vw, 132px);
@@ -713,10 +706,6 @@ h1 em {
     font-size: 2.05rem;
   }
 
-  .instruction {
-    max-width: 198px;
-  }
-
   .board {
     padding-right: 11px;
     padding-left: 11px;
@@ -813,5 +802,644 @@ h1 em {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* 周、月、年的时间簿共用同一块玻璃控制面板，避免界面变成一排普通卡片。 */
+.sync-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid rgba(99, 147, 204, 0.24);
+  border-radius: 999px;
+  color: #5e7798;
+  background: rgba(237, 247, 255, 0.76);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.sync-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #a8c5e8;
+  box-shadow: 0 0 0 3px rgba(168, 197, 232, 0.14);
+}
+
+.sync-chip.is-syncing .sync-chip-dot {
+  background: #ffcb68;
+  box-shadow: 0 0 0 3px rgba(255, 203, 104, 0.17), 0 0 14px rgba(255, 211, 110, 0.7);
+  animation: sync-pulse 1.3s ease-in-out infinite;
+}
+
+.sync-chip.is-synced .sync-chip-dot {
+  background: #7fe1c0;
+  box-shadow: 0 0 0 3px rgba(127, 225, 192, 0.15);
+}
+
+.sync-chip.is-error .sync-chip-dot {
+  background: #ffb09c;
+  box-shadow: 0 0 0 3px rgba(255, 176, 156, 0.14);
+}
+
+@keyframes sync-pulse {
+  50% { transform: scale(1.26); }
+}
+
+.view-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 18px clamp(15px, 4.5vw, 45px) 0;
+}
+
+.view-tabs,
+.sync-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.view-tabs {
+  padding: 4px;
+  border: 1px solid rgba(99, 147, 204, 0.2);
+  border-radius: 999px;
+  background: linear-gradient(130deg, rgba(233, 245, 255, 0.98), rgba(209, 232, 253, 0.56));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.view-tab,
+.sync-button {
+  min-height: 34px;
+  border: 0;
+  border-radius: 999px;
+  color: #5f7594;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.view-tab {
+  min-width: 39px;
+  padding: 0 12px;
+}
+
+.view-tab:hover,
+.sync-button:hover {
+  color: var(--royal-blue);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.view-tab.is-active {
+  color: #fff;
+  background: linear-gradient(135deg, #225bb8, #3d81de);
+  box-shadow: 0 5px 11px rgba(33, 87, 178, 0.23), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.view-tab:active,
+.sync-button:active {
+  transform: scale(0.94);
+}
+
+.sync-actions {
+  justify-content: flex-end;
+}
+
+.sync-button {
+  padding: 0 12px;
+  border: 1px solid rgba(99, 147, 204, 0.28);
+  background: rgba(255, 255, 255, 0.49);
+}
+
+.sync-button-primary {
+  border-color: rgba(37, 91, 183, 0.35);
+  color: #245bab;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.75), rgba(205, 231, 255, 0.82));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+.calendar-panel {
+  min-height: 396px;
+  padding: clamp(28px, 5vw, 46px) clamp(15px, 4.5vw, 45px) 0;
+  transform-origin: 50% 20%;
+}
+
+.board {
+  transform-origin: 50% 20%;
+}
+
+/* 时间层级越大，画面越像从近处退到更远的总览；反向则由总览放大回细节。 */
+.view-zoom-out {
+  animation: ledger-zoom-out 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.view-zoom-in {
+  animation: ledger-zoom-in 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes ledger-zoom-out {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes ledger-zoom-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: scale(0.89);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+.calendar-summary {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 16px;
+}
+
+.calendar-tip {
+  margin: 0 0 2px;
+  color: #7488a3;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-bottom: 5px;
+  color: #748ba9;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 18px;
+  background: var(--line);
+  box-shadow: 0 8px 22px rgba(38, 86, 158, 0.08);
+}
+
+.calendar-day,
+.month-blank {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: clamp(58px, 9.2vw, 82px);
+  aspect-ratio: 1.06;
+  background: rgba(252, 254, 255, 0.96);
+}
+
+.calendar-day {
+  overflow: hidden;
+  padding: 7px 7px 6px;
+  border: 0;
+  color: #476588;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.calendar-day:hover {
+  z-index: 1;
+  background: #fff;
+  box-shadow: inset 0 0 0 2px rgba(52, 118, 211, 0.58);
+}
+
+.calendar-day:active {
+  transform: scale(0.94);
+}
+
+.calendar-day-number {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.calendar-day-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: clamp(24px, 4vw, 33px);
+  height: clamp(24px, 4vw, 33px);
+  place-items: center;
+  border: 1.5px solid #ffe4ad;
+  border-radius: 50%;
+  color: #fff4db;
+  background: radial-gradient(circle at 35% 24%, #68a4ee, #2a6bcb 45%, #123f90 100%);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12), 0 4px 8px rgba(22, 62, 133, 0.2);
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: clamp(1.05rem, 2.7vw, 1.42rem);
+  font-weight: 900;
+  line-height: 1;
+  transform: translate(-50%, -41%) rotate(-8deg);
+}
+
+.calendar-day-seal::after {
+  position: absolute;
+  inset: 3px;
+  border: 1px dashed rgba(255, 229, 172, 0.66);
+  border-radius: inherit;
+  content: "";
+}
+
+.calendar-day-count {
+  position: absolute;
+  right: 6px;
+  bottom: 5px;
+  z-index: 1;
+  color: #426992;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 800;
+}
+
+.calendar-day.has-1 { background: linear-gradient(135deg, #fbfdff, #eaf4ff); }
+.calendar-day.has-2 { background: linear-gradient(135deg, #f6fbff, #dbeeff); }
+.calendar-day.has-3 { background: linear-gradient(135deg, #eef8ff, #c9e4ff); }
+.calendar-day.has-4 { background: linear-gradient(135deg, #e5f4ff, #b7dcff); }
+
+.calendar-day.is-today::before {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--seal);
+  box-shadow: 0 0 0 3px rgba(232, 93, 84, 0.13);
+  content: "";
+}
+
+.calendar-day.is-selected {
+  box-shadow: inset 0 0 0 2px #2f71cb;
+}
+
+.year-panel {
+  min-height: 455px;
+}
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.year-month-card {
+  position: relative;
+  min-width: 0;
+  min-height: 106px;
+  padding: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(107, 151, 204, 0.28);
+  border-radius: 15px;
+  color: #54718f;
+  background:
+    linear-gradient(130deg, rgba(255, 255, 255, 0.9), rgba(226, 241, 255, 0.68)),
+    #f7fbff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease, background-color 160ms ease;
+}
+
+.year-month-card::after {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c9d8e8;
+  content: "";
+}
+
+.year-month-card.has-checkins::after {
+  background: #ffe0a1;
+  box-shadow: 0 0 0 3px rgba(255, 214, 130, 0.2);
+}
+
+.year-month-card:hover,
+.year-month-card.is-selected {
+  border-color: rgba(44, 108, 198, 0.66);
+  background: linear-gradient(135deg, #fff, #dceeff);
+  box-shadow: 0 8px 18px rgba(39, 89, 165, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.year-month-card:active {
+  transform: scale(0.97);
+}
+
+.year-month-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding-right: 10px;
+}
+
+.year-month-heading b {
+  color: #285da9;
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: 1.08rem;
+  letter-spacing: 0.04em;
+}
+
+.year-month-heading small {
+  color: #7890aa;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.mini-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  margin-top: 12px;
+}
+
+.mini-day {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: #dbe8f5;
+}
+
+.mini-day.has-1 { background: #b4d4ed; }
+.mini-day.has-2 { background: #79b8e1; }
+.mini-day.has-3 { background: #4c8ed5; }
+.mini-day.has-4 { background: #265fae; box-shadow: 0 0 0 1px #ffe1a0; }
+
+.github-dialog {
+  width: min(410px, calc(100% - 30px));
+  padding: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 24px;
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(218, 238, 255, 0.85)),
+    #eaf5ff;
+  box-shadow: 0 25px 70px rgba(4, 34, 93, 0.34), inset 0 1px 0 #fff;
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  backdrop-filter: blur(22px) saturate(155%);
+}
+
+.github-dialog::backdrop {
+  background: rgba(12, 45, 107, 0.42);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+.dialog-glow {
+  position: absolute;
+  top: -90px;
+  right: -60px;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(104, 168, 245, 0.42), transparent 66%);
+  pointer-events: none;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  color: #49729f;
+  background: rgba(255, 255, 255, 0.57);
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.github-dialog h2 {
+  position: relative;
+  margin: 7px 0 9px;
+  color: #1b4d9c;
+  font-family: "STKaiti", "Kaiti SC", "KaiTi", serif;
+  font-size: 2rem;
+  line-height: 1.03;
+}
+
+.github-dialog > p:not(.section-kicker) {
+  position: relative;
+  margin: 0;
+  color: #5f7695;
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.token-guide-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 11px 13px;
+  border: 1px solid rgba(64, 126, 207, 0.33);
+  border-radius: 12px;
+  color: #255bac;
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.token-guide-link:hover {
+  border-color: #3378d4;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.token-guide-link span {
+  font-size: 1.05rem;
+}
+
+.token-steps {
+  position: relative;
+  margin: 13px 0 0;
+  padding-left: 1.35rem;
+  color: #66809d;
+  font-size: 0.71rem;
+  line-height: 1.62;
+}
+
+.token-steps b {
+  color: #315f9d;
+  font-weight: 800;
+}
+
+.token-field {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  margin-top: 17px;
+  color: #527297;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.token-field input {
+  width: 100%;
+  min-height: 43px;
+  padding: 0 12px;
+  border: 1px solid rgba(79, 137, 214, 0.36);
+  border-radius: 12px;
+  outline: 0;
+  color: #193f79;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 2px rgba(31, 91, 170, 0.07);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+}
+
+.token-field input::placeholder {
+  color: #9ab0c9;
+}
+
+.token-field input:focus {
+  border-color: #3378d4;
+  box-shadow: 0 0 0 3px rgba(72, 135, 226, 0.15), inset 0 1px 2px rgba(31, 91, 170, 0.07);
+}
+
+.dialog-actions {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dialog-actions .sync-button {
+  min-height: 37px;
+}
+
+.dialog-status {
+  min-height: 1.6em;
+  margin-top: 15px !important;
+  color: #5f7695;
+  font-size: 0.76rem !important;
+  text-align: center;
+}
+
+@media (max-width: 620px) {
+  .view-controls {
+    gap: 10px;
+  }
+
+  .sync-button {
+    padding: 0 9px;
+    font-size: 0.67rem;
+  }
+
+  .calendar-panel {
+    min-height: 350px;
+  }
+
+  .calendar-day,
+  .month-blank {
+    min-height: 54px;
+  }
+
+  .year-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .year-month-card {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 455px) {
+  .diary-header {
+    min-height: 197px;
+  }
+
+  .view-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .view-tabs {
+    width: max-content;
+  }
+
+  .sync-actions {
+    justify-content: flex-start;
+  }
+
+  .calendar-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .calendar-tip {
+    margin-bottom: 0;
+  }
+
+  .calendar-day,
+  .month-blank {
+    min-height: 47px;
+  }
+
+  .calendar-day {
+    padding: 5px;
+  }
+
+  .calendar-day-count {
+    right: 4px;
+    bottom: 4px;
+    font-size: 0.49rem;
+  }
+
+  .calendar-day-seal {
+    transform: translate(-50%, -37%) rotate(-8deg);
+  }
+
+  .github-dialog {
+    padding: 25px 22px;
   }
 }

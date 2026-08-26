@@ -18,7 +18,6 @@
           <div class="title-copy">
             <p class="eyebrow"><span aria-hidden="true">✦</span> WEEKLY ATTENDANCE</p>
             <h1 id="page-title">赵尚涵大王的<br /><em>打卡日记</em></h1>
-            <p class="instruction">轻点方格，盖下一枚到岗印</p>
           </div>
 
           <div class="royal-seal" aria-hidden="true">
@@ -27,20 +26,36 @@
           </div>
         </header>
 
-        <section class="week-toolbar" aria-label="周次控制">
-          <button class="week-button icon-button" id="previous-week" type="button" aria-label="查看上一周">
+        <section class="week-toolbar" aria-label="日期控制">
+          <button class="week-button icon-button" id="previous-period" type="button" aria-label="查看上一段时间">
             <span aria-hidden="true">←</span>
           </button>
-          <button class="week-button week-label" id="current-week" type="button" aria-label="回到本周">
-            <span id="week-range">本周</span>
-            <small>点这里回到本周</small>
+          <button class="week-button week-label" id="current-period" type="button" aria-label="回到今天">
+            <span id="period-label">本周</span>
+            <small id="period-hint">点这里回到今天</small>
           </button>
-          <button class="week-button icon-button" id="next-week" type="button" aria-label="查看下一周">
+          <button class="week-button icon-button" id="next-period" type="button" aria-label="查看下一段时间">
             <span aria-hidden="true">→</span>
           </button>
         </section>
 
-        <section class="board" aria-label="本周打卡表">
+        <section class="view-controls" aria-label="查看方式和同步">
+          <div class="view-tabs" role="tablist" aria-label="打卡查看方式">
+            <button class="view-tab is-active" id="tab-week" type="button" role="tab" aria-selected="true" aria-controls="week-view" data-view="week">周</button>
+            <button class="view-tab" id="tab-month" type="button" role="tab" aria-selected="false" aria-controls="month-view" data-view="month">月</button>
+            <button class="view-tab" id="tab-year" type="button" role="tab" aria-selected="false" aria-controls="year-view" data-view="year">年</button>
+          </div>
+          <div class="sync-actions">
+            <div class="sync-chip is-local" id="sync-chip" aria-live="polite">
+              <span class="sync-chip-dot" aria-hidden="true"></span>
+              <span id="sync-chip-text">本机草稿</span>
+            </div>
+            <button class="sync-button" id="sync-now" type="button" hidden>立即同步</button>
+            <button class="sync-button sync-button-primary" id="connect-github" type="button">连接 GitHub</button>
+          </div>
+        </section>
+
+        <section class="board" id="week-view" role="tabpanel" aria-labelledby="tab-week" aria-label="本周打卡表">
           <div class="board-summary">
             <div>
               <p class="section-kicker">本周上岗簿</p>
@@ -61,14 +76,60 @@
           </div>
         </section>
 
+        <section class="calendar-panel" id="month-view" role="tabpanel" aria-labelledby="tab-month" hidden>
+          <div class="calendar-summary">
+            <div>
+              <p class="section-kicker">本月用印册</p>
+              <p class="summary-text"><strong id="month-completed-count">0</strong><span> 枚印章 · <b id="month-days-count">0</b> 天有打卡</span></p>
+            </div>
+            <p class="calendar-tip">点日期可跳到那一周</p>
+          </div>
+          <div class="calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div class="month-grid" id="month-grid" aria-label="月度打卡日历"></div>
+        </section>
+
+        <section class="calendar-panel year-panel" id="year-view" role="tabpanel" aria-labelledby="tab-year" hidden>
+          <div class="calendar-summary">
+            <div>
+              <p class="section-kicker">全年用印册</p>
+              <p class="summary-text"><strong id="year-completed-count">0</strong><span> 枚印章 · <b id="year-days-count">0</b> 天有打卡</span></p>
+            </div>
+            <p class="calendar-tip">点月份查看详情</p>
+          </div>
+          <div class="year-grid" id="year-grid" aria-label="年度打卡日历"></div>
+        </section>
+
         <footer class="diary-footer">
-          <p><span class="tap-dot" aria-hidden="true"></span> 已自动保存在这台设备；再点一次即可撤销。</p>
+          <p><span class="tap-dot" aria-hidden="true"></span><span id="sync-footer-text">已自动保存在这台设备；连接 GitHub 后可跨设备同步。</span></p>
           <button id="clear-week" type="button">清空这一周</button>
         </footer>
       </section>
     </main>
 
+    <dialog class="github-dialog" id="github-dialog" aria-labelledby="github-dialog-title">
+      <div class="dialog-glow" aria-hidden="true"></div>
+      <button class="dialog-close" id="close-github-dialog" type="button" aria-label="关闭">×</button>
+      <p class="section-kicker">GitHub 同步</p>
+      <h2 id="github-dialog-title">在 GitHub 盖下<br />同步印</h2>
+      <p id="github-dialog-copy">创建一枚只准进入这一个公开仓库的细粒度令牌，再把它交给这台设备。</p>
+      <a class="token-guide-link" id="github-token-guide" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer noopener">打开 GitHub 创建令牌 <span aria-hidden="true">↗</span></a>
+      <ol class="token-steps">
+        <li>资源所有者选 <b>elwnyli</b>，仓库只选 <b>zhaoshanghan-checkin-diary</b>。</li>
+        <li>“Repository permissions” 中仅把 <b>Contents</b> 设为 <b>Read and write</b>。</li>
+      </ol>
+      <label class="token-field" for="github-token">
+        <span>粘贴细粒度令牌</span>
+        <input id="github-token" type="password" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" />
+      </label>
+      <div class="dialog-actions">
+        <button class="sync-button" id="cancel-github-connect" type="button">暂不连接</button>
+        <button class="sync-button sync-button-primary" id="confirm-github-connect" type="button">验证并连接</button>
+      </div>
+      <p class="dialog-status" id="github-dialog-status" aria-live="polite">令牌只保存在这台设备，不会写进公开仓库。</p>
+    </dialog>
+
     <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script src="sync-config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
