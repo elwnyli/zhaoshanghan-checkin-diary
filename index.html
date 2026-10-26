@@ -10,6 +10,7 @@
     />
     <title>赵尚涵大王的打卡日记</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ledger.css" />
   </head>
   <body>
     <main class="page-shell">
@@ -72,7 +73,13 @@
               <caption class="sr-only">星期一到星期日，早上、中午、下午、晚上打卡表</caption>
               <thead id="week-head"></thead>
               <tbody id="checkin-body"></tbody>
+              <tfoot id="ledger-foot"></tfoot>
             </table>
+          </div>
+          <div class="ledger-strip" aria-label="记账合计">
+            <div><small>本周花费</small><b id="strip-week">0</b></div>
+            <div><small id="strip-month-label">本月花费</small><b id="strip-month">0</b></div>
+            <div><small id="strip-year-label">本年花费</small><b id="strip-year">0</b></div>
           </div>
         </section>
 
@@ -86,6 +93,10 @@
           </div>
           <div class="calendar-weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
           <div class="month-grid" id="month-grid" aria-label="月度打卡日历"></div>
+          <div class="ledger-strip ledger-strip-2" aria-label="本月记账合计">
+            <div><small id="month-spend-label">本月一共花费</small><b id="month-spend">0</b></div>
+            <div><small>记账天数</small><b id="month-spend-days">0</b></div>
+          </div>
         </section>
 
         <section class="calendar-panel year-panel" id="year-view" role="tabpanel" aria-labelledby="tab-year" hidden>
@@ -97,6 +108,10 @@
             <p class="calendar-tip">点月份查看详情</p>
           </div>
           <div class="year-grid" id="year-grid" aria-label="年度打卡日历"></div>
+          <div class="ledger-strip ledger-strip-2" aria-label="全年记账合计">
+            <div><small id="year-spend-label">全年一共花费</small><b id="year-spend">0</b></div>
+            <div><small>记账天数</small><b id="year-spend-days">0</b></div>
+          </div>
         </section>
 
         <footer class="diary-footer">
@@ -128,8 +143,28 @@
       <p class="dialog-status" id="github-dialog-status" aria-live="polite">令牌只保存在这台设备，不会写进公开仓库。</p>
     </dialog>
 
+    <dialog class="github-dialog ledger-dialog" id="ledger-dialog" aria-labelledby="ledger-title">
+      <div class="dialog-glow" aria-hidden="true"></div>
+      <button class="dialog-close" id="ledger-close" type="button" aria-label="关闭">×</button>
+      <p class="section-kicker">记账本</p>
+      <h2 id="ledger-title"></h2>
+      <p class="ledger-weekday" id="ledger-weekday"></p>
+      <div class="ledger-meals">
+        <label><span>早</span><input type="number" inputmode="decimal" min="0" step="0.01" data-meal="b" placeholder="0" /></label>
+        <label><span>中</span><input type="number" inputmode="decimal" min="0" step="0.01" data-meal="l" placeholder="0" /></label>
+        <label><span>晚</span><input type="number" inputmode="decimal" min="0" step="0.01" data-meal="d" placeholder="0" /></label>
+      </div>
+      <div class="ledger-sums">
+        <div><small>今日合计</small><b id="ledger-day-total">0</b></div>
+        <div><small id="ledger-month-kicker">本月合计</small><b id="ledger-month-total">0</b></div>
+        <div><small id="ledger-year-kicker">本年合计</small><b id="ledger-year-total">0</b></div>
+      </div>
+      <p class="dialog-status">输入金额后自动求和，记录保存在这台设备。</p>
+    </dialog>
+
     <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
     <script src="sync-config.js"></script>
     <script src="app.js"></script>
+    <script src="ledger.js"></script>
   </body>
 </html>

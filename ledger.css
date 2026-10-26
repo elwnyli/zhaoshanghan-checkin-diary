@@ -1,0 +1,164 @@
+.weekday[data-ledger] {
+  cursor: pointer;
+}
+
+.weekday[data-ledger]:hover {
+  filter: brightness(1.08);
+}
+
+.ledger-weekday {
+  position: relative;
+  margin: 0 0 14px !important;
+}
+
+.ledger-meals {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.ledger-meals label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 14px;
+  border: 1px solid rgba(99, 147, 204, 0.3);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.ledger-meals span {
+  min-width: 1.4em;
+  color: var(--royal-blue);
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.ledger-meals input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.15rem;
+  text-align: right;
+}
+
+.ledger-meals input:focus {
+  outline: none;
+}
+
+.ledger-meals label:focus-within {
+  border-color: var(--blue-bright);
+  box-shadow: 0 0 0 3px rgba(70, 133, 231, 0.2);
+}
+
+.ledger-sums {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 16px 0 6px;
+  padding: 12px 6px;
+  border-radius: 14px;
+  background: linear-gradient(130deg, rgba(233, 245, 255, 0.9), rgba(209, 232, 253, 0.5));
+  text-align: center;
+}
+
+.ledger-sums small {
+  display: block;
+  color: #6383a7;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.ledger-sums b {
+  color: var(--royal-blue);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 1.2rem;
+}
+
+.ledger-sums div:first-child b {
+  color: var(--seal);
+}
+
+.ledger-foot-label,
+.ledger-foot-cell {
+  height: 46px;
+  border-top: 1px solid var(--line-strong);
+  border-right: 1px solid var(--line);
+  background: #fff6dc;
+}
+
+.ledger-foot-label {
+  color: #7a5200;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.ledger-foot-cell {
+  color: var(--seal);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.checkin-table tfoot tr > :last-child {
+  border-right: 0;
+}
+
+.ledger-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 12px 3px 0;
+  padding: 12px 6px;
+  border: 1px solid rgba(99, 147, 204, 0.22);
+  border-radius: 16px;
+  background: linear-gradient(130deg, rgba(233, 245, 255, 0.9), rgba(209, 232, 253, 0.5));
+  text-align: center;
+}
+
+.ledger-strip small {
+  display: block;
+  color: #6383a7;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.ledger-strip b {
+  color: var(--royal-blue);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 1.25rem;
+}
+
+.ledger-strip div:first-child b {
+  color: var(--seal);
+}
+
+.ledger-strip-2 {
+  grid-template-columns: repeat(2, 1fr);
+  margin: 14px 0 0;
+}
+
+.calendar-day-spend {
+  display: block;
+  margin-top: 2px;
+  color: var(--seal);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.year-month-spend {
+  display: block;
+  min-height: 1em;
+  margin-top: 6px;
+  color: var(--seal);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-align: right;
+}
